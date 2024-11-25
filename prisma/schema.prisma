@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "zod-prisma-types"
+  output   = "../types/zod"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("MIGRATION_DATABASE_URL")
+}
+
+model User {
+  id        String   @id
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  prds      PRD[]
+}
+
+model PRD {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  techStack   String[]
+  content     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  published   Boolean  @default(false)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  pages       Page[]
+
+  @@index([userId])
+}
+
+model Page {
+  id        String     @id @default(cuid())
+  name      String
+  prdId     String
+  functions Function[]
+  prd       PRD        @relation(fields: [prdId], references: [id], onDelete: Cascade)
+}
+
+model Function {
+  id     String @id @default(cuid())
+  name   String
+  pageId String
+  page   Page   @relation(fields: [pageId], references: [id], onDelete: Cascade)
+}
