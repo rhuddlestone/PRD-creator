@@ -87,6 +87,4 @@ async function handler(req: Request) {
   return new Response('', { status: 200 })
 }
 
-export const GET = handler;
 export const POST = handler;
-export const PUT = handler;
