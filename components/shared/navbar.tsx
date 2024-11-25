@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 
-
 export function Navbar() {
   return (
-    <div className="border-b">
+    <div className="border-b relative z-[100] bg-background">
       <div className="flex h-16 items-center px-4 container mx-auto">
         <Link href="/" className="font-semibold text-xl">
           PRD Generator
@@ -17,7 +16,6 @@ export function Navbar() {
           >
             Dashboard
           </Link>
-       
         </nav>
 
         <div className="flex items-center space-x-4">

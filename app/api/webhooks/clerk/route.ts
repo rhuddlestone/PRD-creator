@@ -54,22 +54,17 @@ export async function POST(req: Request) {
   // Handle the webhook
   const eventType = evt.type;
 
-  if (eventType === 'user.created') {
-    await db.user.create({
-      data: {
+  if (eventType === 'user.created' || eventType === 'user.updated') {
+    await db.user.upsert({
+      where: { id: evt.data.id },
+      create: {
         id: evt.data.id,
         email: evt.data.email_addresses[0].email_address,
         firstName: evt.data.first_name,
         lastName: evt.data.last_name,
         imageUrl: evt.data.image_url,
-      }
-    })
-  }
-
-  if (eventType === 'user.updated') {
-    await db.user.update({
-      where: { id: evt.data.id },
-      data: {
+      },
+      update: {
         email: evt.data.email_addresses[0].email_address,
         firstName: evt.data.first_name,
         lastName: evt.data.last_name,

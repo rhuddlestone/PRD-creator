@@ -5,11 +5,13 @@ import { CTA } from "@/components/landing/cta";
 
 export default function Home() {
   return (
-    <div className="min-h-full">
-      <Hero />
+    <main className="relative min-h-full">
+      <div className="relative z-50">
+        <Hero />
+      </div>
       <Features />
       <Testimonials />
       <CTA />
-    </div>
+    </main>
   );
 }
