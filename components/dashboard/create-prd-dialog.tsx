@@ -120,123 +120,89 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create New PRD</DialogTitle>
-          <DialogDescription>
-            Enter the details for your new project requirement document.
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="max-w-3xl h-[90vh] flex flex-col p-0 gap-0">
+        <div className="flex-shrink-0 p-6 pb-2">
+          <DialogHeader>
+            <DialogTitle>Create New PRD</DialogTitle>
+            <DialogDescription>
+              Enter the details for your new project requirement document.
+            </DialogDescription>
+          </DialogHeader>
+        </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Project Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter project name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col flex-1 min-h-0">
+            <div className="flex-1 overflow-y-auto px-6 pr-2">
+              <div className="space-y-4 pb-4">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Project Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter project name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Project Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Describe your project and its requirements"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Project Description</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Describe your project and its requirements"
+                          className="min-h-[100px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <FormField
-              control={form.control}
-              name="techStack"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tech Stack</FormLabel>
-                  <FormControl>
-                    <Input 
-                      placeholder="Enter technologies (e.g., React, Node.js, PostgreSQL)" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                <FormField
+                  control={form.control}
+                  name="techStack"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Tech Stack</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="Enter technologies (e.g., React, Node.js, PostgreSQL)" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <FormLabel>Pages</FormLabel>
-                <Button type="button" variant="outline" size="sm" onClick={addPage}>
-                  <Plus className="h-4 w-4 mr-1" />
-                  Add Page
-                </Button>
-              </div>
-
-              {form.watch("pages").map((page, pageIndex) => (
-                <div key={pageIndex} className="space-y-4 p-4 border rounded-lg">
-                  <div className="flex justify-between items-start gap-4">
-                    <FormField
-                      control={form.control}
-                      name={`pages.${pageIndex}.name`}
-                      render={({ field }) => (
-                        <FormItem className="flex-1">
-                          <FormLabel>Page Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter page name" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button 
-                      type="button" 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => removePage(pageIndex)}
-                      className="mt-8"
-                    >
-                      <X className="h-4 w-4" />
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <FormLabel className="text-base">Pages</FormLabel>
+                    <Button type="button" variant="outline" size="sm" onClick={addPage}>
+                      <Plus className="h-4 w-4 mr-1" />
+                      Add Page
                     </Button>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <FormLabel>Functions</FormLabel>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => addFunction(pageIndex)}
-                      >
-                        <Plus className="h-4 w-4 mr-1" />
-                        Add Function
-                      </Button>
-                    </div>
-
-                    {page.functions.map((_, functionIndex) => (
-                      <div key={functionIndex} className="flex gap-4">
+                  {form.watch("pages").map((page, pageIndex) => (
+                    <div key={pageIndex} className="space-y-4 p-4 border rounded-lg bg-background/50">
+                      <div className="flex justify-between items-start gap-4">
                         <FormField
                           control={form.control}
-                          name={`pages.${pageIndex}.functions.${functionIndex}`}
+                          name={`pages.${pageIndex}.name`}
                           render={({ field }) => (
                             <FormItem className="flex-1">
+                              <FormLabel>Page Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="Enter function description" {...field} />
+                                <Input placeholder="Enter page name" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -246,18 +212,59 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
                           type="button" 
                           variant="ghost" 
                           size="sm"
-                          onClick={() => removeFunction(pageIndex, functionIndex)}
+                          onClick={() => removePage(pageIndex)}
+                          className="mt-8"
                         >
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                    ))}
-                  </div>
+
+                      <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                          <FormLabel>Functions</FormLabel>
+                          <Button 
+                            type="button" 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => addFunction(pageIndex)}
+                          >
+                            <Plus className="h-4 w-4 mr-1" />
+                            Add Function
+                          </Button>
+                        </div>
+
+                        {page.functions.map((_, functionIndex) => (
+                          <div key={functionIndex} className="flex gap-4">
+                            <FormField
+                              control={form.control}
+                              name={`pages.${pageIndex}.functions.${functionIndex}`}
+                              render={({ field }) => (
+                                <FormItem className="flex-1">
+                                  <FormControl>
+                                    <Input placeholder="Enter function description" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <Button 
+                              type="button" 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => removeFunction(pageIndex, functionIndex)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
 
-            <div className="flex justify-end gap-3">
+            <div className="flex-shrink-0 flex justify-end gap-3 p-6 border-t bg-background">
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                 Cancel
               </Button>
