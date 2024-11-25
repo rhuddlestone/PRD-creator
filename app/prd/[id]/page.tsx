@@ -44,8 +44,8 @@ export default function PRDPage() {
           setTitle(prd.title || "Untitled PRD");
           setEditorKey(prev => prev + 1);
         }
-      } catch (error) {
-        console.error('Error loading PRD:', error);
+      } catch {
+        console.error('Error loading PRD:');
         toast({
           title: "Error",
           description: "Failed to load PRD",
@@ -60,7 +60,7 @@ export default function PRDPage() {
     setIsSaving(true);
     try {
       await updatePRDContent(id, newContent);
-    } catch (error) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to save changes",
@@ -101,8 +101,8 @@ export default function PRDPage() {
         description: "PRD deleted successfully",
       });
       router.push('/');
-    } catch (error) {
-      console.error('Error deleting PRD:', error);
+    } catch {
+      console.error('Error deleting PRD:');
       toast({
         title: "Error",
         description: "Failed to delete PRD",

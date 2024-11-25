@@ -23,13 +23,6 @@ export function MultiSelect({
   onChange, 
   placeholder = 'Select options' 
 }: MultiSelectProps) {
-  const handleSelect = (option: MultiSelectOption) => {
-    const newValue = value.includes(option.value)
-      ? value.filter(v => v !== option.value)
-      : [...value, option.value];
-    onChange(newValue);
-  };
-
   const removeOption = (optionToRemove: string) => {
     onChange(value.filter(v => v !== optionToRemove));
   };
@@ -66,6 +59,11 @@ export function MultiSelect({
             value.length === 0 && "text-gray-500"
           )}
         >
+          {value.length === 0 && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
           {options.map(option => (
             <option key={option.value} value={option.value}>
               {option.label}

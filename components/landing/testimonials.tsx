@@ -37,7 +37,7 @@ export function Testimonials() {
               <div className="flex flex-col h-full">
                 <blockquote className="flex-1 mb-8">
                   <p className="text-lg text-muted-foreground">
-                    "{testimonial.quote}"
+                    &ldquo;{testimonial.quote}&rdquo;
                   </p>
                 </blockquote>
                 <div className="flex items-center gap-4">

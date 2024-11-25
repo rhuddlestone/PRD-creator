@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 
 export async function POST(req: Request) {
   try {
@@ -37,16 +38,20 @@ export async function POST(req: Request) {
             return;
           }
 
-          const pageData: any = {
+          const pageData: Prisma.PageCreateInput = {
             name: page.name,
-            prdId: prd.id,
+            prd: {
+              connect: { id: prd.id }
+            },
           };
 
           if (page.functions && Array.isArray(page.functions) && page.functions.length > 0) {
             pageData.functions = {
-              create: page.functions.map(func => ({
-                name: func,
-              })),
+              createMany: {
+                data: page.functions.map(func => ({
+                  name: func,
+                })),
+              },
             };
           }
 
