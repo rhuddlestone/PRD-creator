@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { db } from '@/lib/db'
 
-async function handler(req: Request) {
+export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
   if (!WEBHOOK_SECRET) {
@@ -46,7 +46,7 @@ async function handler(req: Request) {
     }) as WebhookEvent
   } catch (err) {
     console.error('Error verifying webhook:', err);
-    return new Response('Error occured', {
+    return new Response('Error occurred', {
       status: 400
     })
   }
@@ -86,5 +86,3 @@ async function handler(req: Request) {
 
   return new Response('', { status: 200 })
 }
-
-export const POST = handler;
