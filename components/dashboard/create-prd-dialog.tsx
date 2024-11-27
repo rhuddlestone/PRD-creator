@@ -17,6 +17,7 @@ const formSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
   description: z.string().min(1, "Description is required"),
   techStack: z.string().min(1, "Tech stack is required"),
+  otherRequirements: z.string().optional(),
   pages: z.array(z.object({
     name: z.string().min(1, "Page name is required"),
     functions: z.array(z.string()).min(1, "At least one function is required")
@@ -39,6 +40,7 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
       title: "",
       description: "",
       techStack: "",
+      otherRequirements: "",
       pages: [{ name: "", functions: [""] }]
     },
   });
@@ -125,7 +127,7 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
           <DialogHeader>
             <DialogTitle>Create New PRD</DialogTitle>
             <DialogDescription>
-              Enter the details for your new project requirement document.
+              Enter the details for your new project requirement document. Be as detailed as possible.
             </DialogDescription>
           </DialogHeader>
         </div>
@@ -156,7 +158,7 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
                       <FormLabel>Project Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Describe your project and its requirements"
+                          placeholder="Describe your project and its requirements. Be as detailed as possible."
                           className="min-h-[100px]"
                           {...field}
                         />
@@ -174,8 +176,26 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
                       <FormLabel>Tech Stack</FormLabel>
                       <FormControl>
                         <Input 
-                          placeholder="Enter technologies (e.g., React, Node.js, PostgreSQL)" 
+                          placeholder="Enter technologies (e.g., React, Node.js, PostgreSQL).  Mention and packages you plan to use. Be as detailed as possible." 
                           {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="otherRequirements"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Other Requirements</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Enter any additional requirements or considerations. For example, we need to send welcome emails to new users."
+                          className="min-h-[100px]"
+                          {...field}
                         />
                       </FormControl>
                       <FormMessage />
@@ -202,7 +222,7 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
                             <FormItem className="flex-1">
                               <FormLabel>Page Name</FormLabel>
                               <FormControl>
-                                <Input placeholder="Enter page name" {...field} />
+                                <Input placeholder="Enter page name (eg: dashboard)" {...field} />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -241,7 +261,7 @@ export function CreatePRDDialog({ open, onOpenChange }: CreatePRDDialogProps) {
                               render={({ field }) => (
                                 <FormItem className="flex-1">
                                   <FormControl>
-                                    <Input placeholder="Enter function description" {...field} />
+                                    <Input placeholder="Enter function description. Be as detailed as possible." {...field} />
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
